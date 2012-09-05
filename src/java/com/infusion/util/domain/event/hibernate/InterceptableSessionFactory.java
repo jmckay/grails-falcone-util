@@ -1,6 +1,8 @@
 package com.infusion.util.domain.event.hibernate;
 
 import org.hibernate.*;
+import org.hibernate.engine.profile.FetchProfile;
+import org.hibernate.id.factory.IdentifierGeneratorFactory;
 import org.hibernate.proxy.EntityNotFoundDelegate;
 import org.hibernate.cfg.Settings;
 import org.hibernate.exception.SQLExceptionConverter;
@@ -29,15 +31,17 @@ import javax.naming.NamingException;
 import javax.transaction.TransactionManager;
 import java.sql.Connection;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.io.Serializable;
 
 import com.infusion.util.event.EventBroker;
+import org.hibernate.type.TypeResolver;
 
 /**
  * Wrapped "SessionFactory" class that returns custom TenantSession instances.
  */
-public class InterceptableSessionFactory implements SessionFactory , SessionFactoryImplementor{
+public class InterceptableSessionFactory implements SessionFactory, SessionFactoryImplementor{
 // ========================================================================================================================
 //    Instance Fields
 // ========================================================================================================================
@@ -318,5 +322,38 @@ public class InterceptableSessionFactory implements SessionFactory , SessionFact
     public SessionFactoryImplementor getImplementor() {
         return implementor;
     }
+
+
+    // SessionFactoryImplementor
+    public SessionFactoryObserver getFactoryObserver(){
+      return implementor.getFactoryObserver();
+    }
+    public IdentifierGeneratorFactory getIdentifierGeneratorFactory(){
+      return implementor.getIdentifierGeneratorFactory();
+    }
+    public TypeResolver getTypeResolver(){
+      return implementor.getTypeResolver();
+    }
+    public Properties getProperties(){
+      return implementor.getProperties();
+    }
+    public FetchProfile getFetchProfile(String name){
+      return implementor.getFetchProfile(name);
+    }
+    public boolean containsFetchProfileDefinition(String name){
+      return implementor.containsFetchProfileDefinition(name);
+    }
+
+
+
+    // SessionFactory
+    public TypeHelper getTypeHelper(){
+      return wrapped.getTypeHelper();
+    }
+    public Cache getCache(){
+      return wrapped.getCache();
+    }
+
+
 
 }

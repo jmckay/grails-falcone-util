@@ -247,6 +247,14 @@ public class InterceptableSession implements EventSource, Session {
         return session.get(s, serializable, lockMode);
     }
 
+    public Object get(Class aClass, Serializable serializable, LockOptions lockOptions) throws HibernateException {
+        return session.get(aClass, serializable, lockOptions);
+    }
+
+    public Object get(String s, Serializable serializable, LockOptions lockOptions) throws HibernateException {
+        return session.get(s, serializable, lockOptions);
+    }
+
     /*
     * ###############################################################################
     * Event Source
@@ -485,6 +493,14 @@ public class InterceptableSession implements EventSource, Session {
         return session.load(s, serializable, lockMode);
     }
 
+    public Object load(Class aClass, Serializable serializable, LockOptions lockOptions) throws HibernateException {
+        return session.load(aClass, serializable, lockOptions);
+    }
+
+    public Object load(String s, Serializable serializable, LockOptions lockOptions) throws HibernateException {
+        return session.load(s, serializable, lockOptions);
+    }
+
     public void lock(Object o, LockMode lockMode) throws HibernateException {
         session.lock(o, lockMode);
     }
@@ -535,6 +551,10 @@ public class InterceptableSession implements EventSource, Session {
 
     public void refresh(Object o, LockMode lockMode) throws HibernateException {
         session.refresh(o, lockMode);
+    }
+
+    public void refresh(Object object, LockOptions lockOptions) throws HibernateException{
+      session.refresh(object, lockOptions);
     }
 
     public void refresh(Object o, Map map) throws HibernateException {
@@ -643,5 +663,58 @@ public class InterceptableSession implements EventSource, Session {
 
     public void update(String s, Object o, Serializable serializable) throws HibernateException {
         session.update(s, o, serializable);
+    }
+
+    // new sessionImplementor
+    public LoadQueryInfluencers getLoadQueryInfluencers(){
+      return sessionImplementor.getLoadQueryInfluencers();
+    }
+
+    public void applyNonFlushedChanges(NonFlushedChanges nonFlushedChanges) throws HibernateException{
+      sessionImplementor.applyNonFlushedChanges(nonFlushedChanges);
+    }
+
+    public NonFlushedChanges getNonFlushedChanges() throws HibernateException{
+      return sessionImplementor.getNonFlushedChanges();
+    }
+
+
+
+
+    // session new methods
+    public void enableFetchProfile(String name) throws UnknownProfileException{
+      session.enableFetchProfile(name);
+    }
+
+    public boolean isDefaultReadOnly(){
+      return session.isDefaultReadOnly();
+    }
+
+    public boolean isFetchProfileEnabled(String name) throws UnknownProfileException{
+      return session.isFetchProfileEnabled(name);
+    }
+
+    public boolean isReadOnly(Object entityOrProxy){
+      return session.isReadOnly(entityOrProxy);
+    }
+
+    public void disableFetchProfile(String name) throws UnknownProfileException{
+      session.disableFetchProfile(name);
+    }
+
+    public void setDefaultReadOnly(boolean readOnly){
+      session.setDefaultReadOnly(readOnly);
+    }
+
+    public Session.LockRequest buildLockRequest(LockOptions lockOptions){
+      return session.buildLockRequest(lockOptions);
+    }
+
+    public LobHelper getLobHelper(){
+      return session.getLobHelper();
+    }
+
+    public TypeHelper getTypeHelper(){
+      return session.getTypeHelper();
     }
 }
