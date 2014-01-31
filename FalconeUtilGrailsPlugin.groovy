@@ -27,7 +27,7 @@ import grails.util.GrailsUtil
 import com.infusion.util.event.EventBrokerHolder
 
 class FalconeUtilGrailsPlugin {
-  def version = "1.1-DEV"
+  def version = "1.2-DEV"
   def dependsOn = [:]
   def author = "Eric Martineau"
   def authorEmail = "ericm@infusionsoft.com"
